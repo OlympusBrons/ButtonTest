@@ -1,46 +1,72 @@
 package com.learn2android.buttontest;
 
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.app.Activity;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
+
+    int count = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
-    Button button = (Button) findViewById(R.id.push);
-    Button resetButton = (Button) findViewById(R.id.reset);
-    TextView textView = (TextView) findViewById(R.id.merica);
+    public void onPushButtonClicked(View view) {
+        Button button = (Button) findViewById(R.id.push);
+        Button reset = (Button) findViewById(R.id.reset);
+        TextView textView = (TextView) findViewById(R.id.merica);
 
-    public void onPushButtonClicked (View view) {
-        if(textView.getVisibility() == (View.INVISIBLE)) {
+
+        if (textView.getVisibility() == (View.INVISIBLE)) {
             textView.setVisibility(View.VISIBLE);
             button.setText("AGAIN!");
-        }
-        else if (textView.getVisibility() == (View.GONE)) {
+
+        } else if (textView.getVisibility() == (View.GONE)) {
             textView.setVisibility(View.VISIBLE);
         }
 
-        switch(textView.getCurrentTextColor()) {
-            case Color.RED: textView.setTextColor(Color.WHITE);
+        switch (textView.getCurrentTextColor()) {
+            case Color.RED:
+                textView.setTextColor(Color.WHITE);
+                count++;
                 break;
-            case Color.WHITE: textView.setTextColor(Color.BLUE);
-                resetButton.setVisibility(View.VISIBLE);
+            case Color.WHITE:
+                textView.setTextColor(Color.BLUE);
+                count++;
                 break;
-            case Color.BLUE: textView.setTextColor(Color.RED);
+            case Color.BLUE:
+                textView.setTextColor(Color.RED);
+                count++;
                 break;
         }
+        if(count > 4) {
+            reset.setVisibility(View.VISIBLE);
+        }
+
     }
+
+        public void onResetClicked(View view) {
+            count = 0;
+            Button button = (Button) findViewById(R.id.push);
+            Button reset = (Button) findViewById(R.id.reset);
+
+            TextView textView = (TextView) findViewById(R.id.merica);
+            textView.setVisibility(View.INVISIBLE);
+            reset.setVisibility(View.INVISIBLE);
+            button.setText("Push Me");
+     }
+
 
 
     @Override
