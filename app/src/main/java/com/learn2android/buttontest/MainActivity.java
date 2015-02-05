@@ -12,22 +12,28 @@ import android.app.Activity;
 
 public class MainActivity extends Activity {
 
-    int count = 0;
+    private Button button;
+    private Button reset;
+    private TextView textView;
+    int count;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupView();
 
     }
 
+    private void setupView() {
+        button = (Button) findViewById(R.id.push);
+        reset = (Button) findViewById(R.id.reset);
+        textView = (TextView) findViewById(R.id.merica);
+        count = 0;
+    }
+
     public void onPushButtonClicked(View view) {
-        Button button = (Button) findViewById(R.id.push);
-        Button reset = (Button) findViewById(R.id.reset);
-        TextView textView = (TextView) findViewById(R.id.merica);
-
-
         if (textView.getVisibility() == (View.INVISIBLE)) {
             textView.setVisibility(View.VISIBLE);
             button.setText("AGAIN!");
@@ -39,17 +45,15 @@ public class MainActivity extends Activity {
         switch (textView.getCurrentTextColor()) {
             case Color.RED:
                 textView.setTextColor(Color.WHITE);
-                count++;
                 break;
             case Color.WHITE:
                 textView.setTextColor(Color.BLUE);
-                count++;
                 break;
             case Color.BLUE:
                 textView.setTextColor(Color.RED);
-                count++;
                 break;
         }
+        count++;
         if(count > 4) {
             reset.setVisibility(View.VISIBLE);
         }
@@ -58,10 +62,6 @@ public class MainActivity extends Activity {
 
         public void onResetClicked(View view) {
             count = 0;
-            Button button = (Button) findViewById(R.id.push);
-            Button reset = (Button) findViewById(R.id.reset);
-
-            TextView textView = (TextView) findViewById(R.id.merica);
             textView.setVisibility(View.INVISIBLE);
             reset.setVisibility(View.INVISIBLE);
             button.setText("Push Me");
